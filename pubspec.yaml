@@ -33,6 +33,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   cupertino_icons: ^1.0.2
   dotted_border: ^2.1.0
+  firebase_app_check: ^0.2.1+8
   firebase_auth: ^4.15.3
   firebase_core: ^2.24.2
   firebase_storage: ^11.5.6
@@ -44,11 +45,19 @@ dependencies:
   image_picker: ^1.0.7
   intl: ^0.18.0
   lottie: ^2.7.0
+  permission_handler: ^11.0.1
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.1.0
   url_launcher: ^6.2.4
 
 dev_dependencies:
+  flutter_launcher_icons: '^0.13.1'
+
+flutter_launcher_icons:
+  android: 'launcher_icon'
+  ios: true
+  image_path: 'assets/images/cooking.png'
+
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

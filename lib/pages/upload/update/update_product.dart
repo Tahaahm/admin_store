@@ -7,7 +7,9 @@ import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/constants/text_strings.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
 import 'package:admin_store_commerce_shop/util/validators/validation.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UpdateProduct extends StatelessWidget {
@@ -25,7 +27,7 @@ class UpdateProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = UpdateController.instance;
+    final controller = Get.put(UpdateController(product: productModel));
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -56,24 +58,31 @@ class UpdateProduct extends StatelessWidget {
                             height: Dimentions.height45,
                           ),
                           Padding(
-                              padding: EdgeInsets.all(Dimentions.height32),
-                              child: Container(
-                                height: 210,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimentions.height12),
-                                  border:
-                                      Border.all(color: TColors.primaryColor),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.network(
-                                    productModel.imageUrl,
-                                    fit: BoxFit.cover,
+                            padding: EdgeInsets.all(Dimentions.height32),
+                            child: Container(
+                              height: 210,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimentions.height12),
+                                border: Border.all(color: TColors.primaryColor),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: CachedNetworkImage(
+                                  imageUrl: productModel.imageUrl,
+                                  fit: BoxFit.cover,
+                                  placeholder: (context, url) => Center(
+                                    child: CircularProgressIndicator(
+                                      color: TColors.primaryColor,
+                                    ),
                                   ),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
                                 ),
-                              )),
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: Dimentions.height20,
                           ),

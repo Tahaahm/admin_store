@@ -7,6 +7,7 @@ import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/constants/image_string.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
 import 'package:admin_store_commerce_shop/util/helpers/helper_functions.dart';
+import 'package:admin_store_commerce_shop/util/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -50,6 +51,11 @@ class UserList extends StatelessWidget {
               itemCount: usersController.userList.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
+                  onTap: () {
+                    TLoaders.warningSnackBar(
+                        title: "Notification",
+                        message: "Please to delete user Long Press");
+                  },
                   onLongPress: () => usersController.deleteAccountWarningPopup(
                       usersController.userList[index].id,
                       usersController.userList[index].email),

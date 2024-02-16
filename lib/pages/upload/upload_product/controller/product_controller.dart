@@ -167,8 +167,8 @@ class ProductController extends GetxController {
       // Close loading dialog
       TFullScreenLoader.stopLoading();
       TLoaders.successSnackBar(
-          title: "Successfully added new Brand",
-          message: "Now you can check new brand");
+          title: "Successfully added new Product",
+          message: "Now you can check new Product");
       Navigator.pushAndRemoveUntil(
         Get.context!,
         MaterialPageRoute(
@@ -260,8 +260,7 @@ class ProductController extends GetxController {
       await uploadRepository.deleteBrand(supCategoryId, categoryId, brandId);
 
       TLoaders.successSnackBar(
-          title: "SupCategory deleted successfully",
-          message: "Successfully deleted");
+          title: "Brand deleted successfully", message: "Successfully deleted");
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(
@@ -270,7 +269,7 @@ class ProductController extends GetxController {
           (route) => false);
     } catch (e) {
       TLoaders.errorSnackBar(
-          title: "Failed to delete SupCategory", message: e.toString());
+          title: "Failed to delete Brand", message: e.toString());
     }
   }
 }

@@ -41,8 +41,8 @@ class UploadSupCategories extends GetxController {
       }
       await _repository.createSupcategory(titleCategory.text);
       TLoaders.successSnackBar(
-          title: "Upload Category Successfully",
-          message: "There is new category now");
+          title: "Upload SupCategory Successfully",
+          message: "There is new SupCategory now");
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(

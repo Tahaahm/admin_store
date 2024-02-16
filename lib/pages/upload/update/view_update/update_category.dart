@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable, avoid_print
-
 import 'package:admin_store_commerce_shop/common/widgets/shimmer/t_list_shimmer.dart';
 import 'package:admin_store_commerce_shop/constant/widgets/app_bar/custom_appbar.dart';
 import 'package:admin_store_commerce_shop/pages/upload/brand_upload/controller/brand_controller.dart';
@@ -12,12 +10,13 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UpdateCategoryPage extends StatelessWidget {
-  const UpdateCategoryPage({super.key, required this.doc});
+  const UpdateCategoryPage({Key? key, required this.doc}) : super(key: key);
+
   final String doc;
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(BrandController());
-    controller.fetchCategoriesForSupCategory(doc);
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.all(Dimentions.height8),
@@ -28,47 +27,54 @@ class UpdateCategoryPage extends StatelessWidget {
                 title: Text("Update Category"),
                 showBackArrow: true,
               ),
-              Obx(() {
-                if (controller.categories.isNotEmpty) {
-                  if (controller.isLoading.value) {
-                    return TListShimmer();
-                  } else {
-                    return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: controller.categories.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: Dimentions.height10),
-                          child: ListTile(
-                            onTap: () => Get.to(
-                              () => UpdateBrandPage(
-                                supCategoryId: doc,
-                                categoryId: controller.categories[index].id,
-                              ),
-                            ),
-                            leading: Icon(
-                              Iconsax.category,
-                              color: TColors.warning,
-                              size: TSize.iconLg,
-                            ),
-                            title: Text(controller.categories[index].title),
-                            subtitle: Text("upload category to SupCategory"),
-                            trailing: Icon(
-                              Iconsax.arrow_right_41,
-                              color: TColors.warning,
-                              size: TSize.iconMd,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              })
+              FutureBuilder(
+                  future: controller.fetchCategoriesForSupCategory(doc),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return TListShimmer();
+                    } else {
+                      return Obx(() {
+                        if (controller.categories.isNotEmpty) {
+                          return ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.categories.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: Dimentions.height10),
+                                child: ListTile(
+                                  onTap: () => Get.to(
+                                    () => UpdateBrandPage(
+                                      supCategoryId: doc,
+                                      categoryId:
+                                          controller.categories[index].id,
+                                    ),
+                                  ),
+                                  leading: Icon(
+                                    Iconsax.category,
+                                    color: TColors.warning,
+                                    size: TSize.iconLg,
+                                  ),
+                                  title:
+                                      Text(controller.categories[index].title),
+                                  subtitle:
+                                      Text("upload category to SupCategory"),
+                                  trailing: Icon(
+                                    Iconsax.arrow_right_41,
+                                    color: TColors.warning,
+                                    size: TSize.iconMd,
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(child: Text("No categories found"));
+                        }
+                      });
+                    }
+                  }),
             ],
           ),
         ),

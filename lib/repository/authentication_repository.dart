@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
@@ -27,7 +28,31 @@ class AuthenticationRepository extends GetxController {
   @override
   void onReady() {
     // FlutterNativeSplash.remove();
-    ScreenRedirct();
+    checkPermissionsAndNavigate();
+  }
+
+  Future<void> checkPermissionsAndNavigate() async {
+    // Check if the necessary permissions are granted
+    final permissionStatus = await Permission.storage.status;
+    if (permissionStatus.isGranted) {
+      // Permissions granted, proceed with redirection
+      ScreenRedirct();
+    } else {
+      // Permissions not granted, request them
+      requestPermissions();
+    }
+  }
+
+  Future<void> requestPermissions() async {
+    // Request permissions
+    final permissionStatus = await Permission.storage.request();
+    if (permissionStatus.isGranted) {
+      // Permissions granted, proceed with redirection
+      ScreenRedirct();
+    } else {
+      // Permissions denied, handle accordingly
+      print('Permission denied');
+    }
   }
 
   //Screen for show relevant Screen
@@ -190,25 +215,4 @@ class AuthenticationRepository extends GetxController {
       }
     }
   }
-
-  // DELETE USER
-  // Future<void> deleteAccount() async {
-  //   try {
-  //     await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
-  //     await _auth.currentUser!.delete();
-  //   } on FirebaseAuthException catch (e) {
-  //     throw TFirebaseAuthException(e.code).message;
-  //   } on FirebaseException catch (e) {
-  //     throw TFirebaseException(e.code).message;
-  //   } on FormatException catch (_) {
-  //     throw TFormatException();
-  //   } on PlatformException catch (e) {
-  //     throw TPlatformException(e.code).message;
-  //   } catch (e) {
-  //     if (kDebugMode) {
-  //       print("Something went wrong, please try again $e");
-  //       return null;
-  //     }
-  //   }
-  // }
 }
