@@ -11,6 +11,24 @@ import 'package:get/get.dart';
 import 'package:admin_store_commerce_shop/models/products/product_model.dart';
 
 class UpdateController extends GetxController {
+  @override
+  void onClose() {
+    nameProductController.clear();
+    depthController.clear();
+    widthController.clear();
+    heightController.clear();
+    volumeController.clear();
+    powerController.clear();
+    priceController.clear();
+    materialController.clear();
+    brandController.clear();
+    stockController.clear();
+    descriptionController.clear();
+    weightController.clear();
+
+    super.onClose();
+  }
+
   static UpdateController get instance => Get.find();
 
   // Declare variables to hold product data
@@ -78,9 +96,11 @@ class UpdateController extends GetxController {
         Navigator.of(Get.context!).pop();
         return;
       }
+      String updatedTitle = _capitalizeFirstLetter(nameProductController.text);
+
       ProductModel newProduct = ProductModel(
         id: product.id,
-        title: nameProductController.text,
+        title: updatedTitle,
         depth: double.parse(depthController.text),
         width: double.parse(widthController.text),
         height: double.parse(heightController.text),
@@ -94,6 +114,7 @@ class UpdateController extends GetxController {
         description: descriptionController.text.split(','),
         volume: double.parse(volumeController.text),
         weight: double.parse(weightController.text),
+        supcategoryId: supcategoryId, categoryId: category, brandId: brandId,
       );
 
       await UploadRepository.instance.updateProduct(
@@ -102,7 +123,7 @@ class UpdateController extends GetxController {
       // Handle success or notify the user
       TLoaders.successSnackBar(
           title: "Product updated successfully!",
-          message: "The $nameProductController has been updated!!!");
+          message: "The Product has been updated!!!");
       Navigator.pushAndRemoveUntil(
         Get.context!,
         MaterialPageRoute(
@@ -131,5 +152,10 @@ class UpdateController extends GetxController {
 
     // Update the current currency value in the controller
     newCurrency = newValue;
+  }
+
+  String _capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return '';
+    return text[0].toUpperCase() + text.substring(1);
   }
 }

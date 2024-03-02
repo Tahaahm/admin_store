@@ -26,6 +26,12 @@ class UploadCategoriesController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    categoryName.clear();
+    super.onClose();
+  }
+
   final uploadRepository = Get.put(UploadRepository());
   final fetchRepository = Get.put(FetchRepository());
   final isLoading = false.obs;
@@ -62,8 +68,8 @@ class UploadCategoriesController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoaders.errorSnackBar(
-            title: "No Ineternet Connection",
-            message: "Please try to connect internet and try again");
+            title: "No Internet Connection",
+            message: "Please try to connect to the internet and try again");
         TFullScreenLoader.stopLoadingNavigate();
         return;
       }
@@ -72,7 +78,7 @@ class UploadCategoriesController extends GetxController {
         TFullScreenLoader.stopLoading();
         return;
       }
-      print(pickedImage);
+
       // Check if pickedImage is null
       if (pickedImage.value == null) {
         TLoaders.errorSnackBar(
@@ -86,18 +92,21 @@ class UploadCategoriesController extends GetxController {
         return;
       }
 
+      // Capitalize the first letter of the category name
+      String capitalizedCategoryName = categoryName.text.capitalizeFirst!;
+
       final imageUrl = await _storageService.uploadImageFile(
-          'Categories', pickedImage.value!, categoryName.text);
+          'Categories', pickedImage.value!, capitalizedCategoryName);
 
       // Create category in Firestore
       await uploadRepository.createCategory(
-          supcategoryId, categoryName.text, imageUrl);
+          supcategoryId, capitalizedCategoryName, imageUrl);
       TLoaders.successSnackBar(
           title: "Successfully adding Category",
           message: "There is new Category");
       // Close loading dialog
 
-      // Navigate back to previous page after successful upload
+      // Navigate back to the previous page after successful upload
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(

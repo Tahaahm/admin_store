@@ -36,7 +36,7 @@ class TAppBar extends StatelessWidget implements PreferredSize {
             ? IconButton(
                 onPressed: () => Get.back(),
                 icon: Icon(
-                  Iconsax.arrow_left,
+                  Icons.arrow_back_ios,
                   color:
                       backgroundColor ?? (dark ? TColors.white : TColors.black),
                 ))

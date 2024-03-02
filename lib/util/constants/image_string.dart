@@ -19,4 +19,6 @@ class TImage {
 
   static const String userProfile = "assets/animations/user_profile.json";
   static const String userAdmin = "assets/animations/user_admin.json";
+  static const String emptyList = "assets/animations/empty_list.json";
+  static const String exchangeMoney = "assets/animations/exchange.json";
 }

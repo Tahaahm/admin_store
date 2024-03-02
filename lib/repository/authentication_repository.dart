@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_const_constructors, unused_field, avoid_returning_null_for_void, unused_local_variable, body_might_complete_normally_nullable
 
 import 'package:admin_store_commerce_shop/authentication/pages/login/login.dart';
+import 'package:admin_store_commerce_shop/authentication/pages/signup/verfiy_email.dart';
 import 'package:admin_store_commerce_shop/pages/main_page/naviagte_menu.dart';
 import 'package:admin_store_commerce_shop/pages/onBoarding/onBoarding.dart';
 import 'package:admin_store_commerce_shop/util/constants/image_string.dart';
@@ -9,6 +10,7 @@ import 'package:admin_store_commerce_shop/util/ecpectation/firebase_exception.da
 import 'package:admin_store_commerce_shop/util/ecpectation/format_exception.dart';
 import 'package:admin_store_commerce_shop/util/ecpectation/platform_exception.dart';
 import 'package:admin_store_commerce_shop/util/popups/full_screen_loaders.dart';
+import 'package:admin_store_commerce_shop/util/popups/loaders.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -51,7 +53,8 @@ class AuthenticationRepository extends GetxController {
       ScreenRedirct();
     } else {
       // Permissions denied, handle accordingly
-      print('Permission denied');
+
+      TLoaders.errorSnackBar(title: "Permission denied");
     }
   }
 
@@ -60,11 +63,27 @@ class AuthenticationRepository extends GetxController {
     final user = _auth.currentUser;
     if (user != null) {
       if (user.emailVerified) {
-        Get.offAll(() => NavigationMenu());
+        // Check if the user exists in Firestore
+        final userSnapshot = await FirebaseFirestore.instance
+            .collection('Admin')
+            .doc(user.uid)
+            .get();
+
+        if (userSnapshot.exists) {
+          // User exists in Firestore, navigate to NavigationMenu
+          Get.off(() => NavigationMenu());
+        } else {
+          // User does not exist in Firestore, navigate to LoginPage
+          Get.offAll(() => LoginPage());
+        }
       } else {
-        Get.offAll(() => LoginPage());
+        // User's email is not verified, navigate to LoginPage
+        Get.offAll(() => VerfiyEmailScreen(
+              email: user.email.toString(),
+            ));
       }
     } else {
+      // User is not logged in, navigate to OnBoardingScreen
       deviceStorage.writeIfNull('isFirstTime', true);
       deviceStorage.read('isFirstTime') != true
           ? Get.offAll(() => LoginPage())

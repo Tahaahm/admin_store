@@ -21,6 +21,12 @@ class BrandController extends GetxController {
     super.onInit();
   }
 
+  @override
+  void onClose() {
+    brandTitle.clear();
+    super.onClose();
+  }
+
   final fetchRepository = Get.put(FetchRepository());
   final _uploadRepository = Get.put(UploadRepository());
   RxList<CategoryModel> categories = <CategoryModel>[].obs;
@@ -52,8 +58,8 @@ class BrandController extends GetxController {
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoaders.errorSnackBar(
-            title: "No Ineternet Connection",
-            message: "Please try to connect internet and try again");
+            title: "No Internet Connection",
+            message: "Please try to connect to the internet and try again");
         TFullScreenLoader.stopLoadingNavigate();
         return;
       }
@@ -63,16 +69,16 @@ class BrandController extends GetxController {
         return;
       }
 
-      if (supcategoryId.isEmpty) {
+      if (supcategoryId.isEmpty || categoryId.isEmpty) {
         TFullScreenLoader.stopLoading();
         return;
       }
-      if (categoryId.isEmpty) {
-        TFullScreenLoader.stopLoading();
-        return;
-      }
+
+      // Capitalize the first letter of the brand title
+      String capitalizedBrandTitle = brandTitle.text.capitalizeFirst!;
+
       await _uploadRepository.addBrandToCategory(
-          supcategoryId, categoryId, brandTitle.text);
+          supcategoryId, categoryId, capitalizedBrandTitle);
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(

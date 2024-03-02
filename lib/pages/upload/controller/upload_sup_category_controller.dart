@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, unused_field, unused_local_variable, use_rethrow_when_possible, avoid_print
-
 import 'package:admin_store_commerce_shop/pages/main_page/naviagte_menu.dart';
 import 'package:admin_store_commerce_shop/repository/upload_repository/upload_repository.dart';
 import 'package:admin_store_commerce_shop/util/constants/image_string.dart';
@@ -29,20 +27,25 @@ class UploadSupCategories extends GetxController {
       TFullScreenLoader.openLoadingDialog("Uploading...", TImage.processing);
 
       if (!keyForm.currentState!.validate()) {
+        TFullScreenLoader.stopLoading();
         return;
       }
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         TLoaders.errorSnackBar(
-            title: "No Ineternet Connection",
-            message: "Please try to connect internet and try again");
+            title: "No Internet Connection",
+            message: "Please try to connect to the internet and try again");
         TFullScreenLoader.stopLoadingNavigate();
         return;
       }
-      await _repository.createSupcategory(titleCategory.text);
+
+      // Capitalize the first letter of the category title
+      String capitalizedTitle = titleCategory.text.capitalizeFirst!;
+
+      await _repository.createSupcategory(capitalizedTitle);
       TLoaders.successSnackBar(
           title: "Upload SupCategory Successfully",
-          message: "There is new SupCategory now");
+          message: "There is a new SupCategory now");
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(

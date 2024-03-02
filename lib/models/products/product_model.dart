@@ -16,6 +16,9 @@ class ProductModel {
   final int stock;
   final List<String> description;
   final double volume; // in cubic meters
+  final String supcategoryId;
+  final String categoryId;
+  final String brandId;
 
   ProductModel({
     required this.id,
@@ -33,6 +36,9 @@ class ProductModel {
     required this.stock,
     required this.description,
     required this.volume,
+    required this.supcategoryId,
+    required this.categoryId,
+    required this.brandId,
   });
 
   factory ProductModel.fromFirestore(DocumentSnapshot doc) {
@@ -42,7 +48,7 @@ class ProductModel {
       depth: doc['depth'].toDouble(),
       width: doc['width'].toDouble(),
       height: doc['height'].toDouble(),
-      weight: doc['weight'].toDouble(), // Ensure toDouble() conversion
+      weight: doc['weight'].toDouble(),
       power: doc['power'].toDouble(),
       price: doc['price'],
       currency: doc['currency'],
@@ -51,7 +57,10 @@ class ProductModel {
       brand: doc['brand'],
       stock: doc['stock'],
       description: List<String>.from(doc['description']),
-      volume: doc['volume'].toDouble(), // Ensure toDouble() conversion
+      volume: doc['volume'].toDouble(),
+      supcategoryId: doc['supcategoryId'], // Added supcategoryId
+      categoryId: doc['categoryId'], // Added categoryId
+      brandId: doc['brandId'], // Added brandId
     );
   }
 
@@ -71,6 +80,9 @@ class ProductModel {
       'stock': stock,
       'description': description,
       'volume': volume,
+      'supcategoryId': supcategoryId, // Added supcategoryId
+      'categoryId': categoryId, // Added categoryId
+      'brandId': brandId, // Added brandId
     };
   }
 
@@ -91,6 +103,9 @@ class ProductModel {
       'stock': stock,
       'description': description,
       'volume': volume,
+      'supcategoryId': supcategoryId, // Added supcategoryId
+      'categoryId': categoryId, // Added categoryId
+      'brandId': brandId, // Added brandId
     };
   }
 }

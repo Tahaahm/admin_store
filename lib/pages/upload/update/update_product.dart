@@ -30,12 +30,19 @@ class UpdateProduct extends StatelessWidget {
     final controller = Get.put(UpdateController(product: productModel));
 
     return Scaffold(
+      appBar: AppBar(
+          title: Text("Update Product"),
+          leading: GestureDetector(
+            onTap: () {
+              controller.onClose();
+              Get.back(); // First back
+              Get.back(); // Second back
+              print("object");
+            },
+            child: Icon(Icons.arrow_back_ios),
+          )),
       body: SingleChildScrollView(
         child: Column(children: [
-          TAppBar(
-            title: Text("Update Product"),
-            showBackArrow: true,
-          ),
           Padding(
             padding: EdgeInsets.all(Dimentions.height16),
             child: Column(

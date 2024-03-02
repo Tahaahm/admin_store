@@ -5,6 +5,7 @@ import 'package:admin_store_commerce_shop/constant/widgets/app_bar/custom_appbar
 import 'package:admin_store_commerce_shop/pages/upload/brand_upload/view/view_sup_category_brand.dart';
 import 'package:admin_store_commerce_shop/pages/upload/category_upload/view_category/view_category.dart';
 import 'package:admin_store_commerce_shop/pages/upload/delete/delete_supcategory.dart';
+import 'package:admin_store_commerce_shop/pages/upload/exchange/exhange_page.dart';
 import 'package:admin_store_commerce_shop/pages/upload/sup_category_upload/super_category_upload_page.dart';
 import 'package:admin_store_commerce_shop/pages/upload/update/view_update/update_supcategory.dart';
 import 'package:admin_store_commerce_shop/pages/upload/upload_product/view_product/view_supcategory_product.dart';
@@ -139,6 +140,26 @@ class UploadPage extends StatelessWidget {
               ),
               trailing: Icon(
                 Iconsax.document_upload,
+                color: TColors.warning,
+                size: TSize.iconMd,
+              ),
+            ),
+            SizedBox(
+              height: TSize.spaceBtwItems,
+            ),
+            ListTile(
+              onTap: () => Get.to(() => ExChangePage()),
+              leading: Icon(
+                Iconsax.money_change,
+                color: TColors.warning,
+                size: TSize.iconLg,
+              ),
+              title: Text(
+                "Update Exchange",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              trailing: Icon(
+                Iconsax.dollar_circle,
                 color: TColors.warning,
                 size: TSize.iconMd,
               ),

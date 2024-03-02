@@ -1,15 +1,15 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:admin_store_commerce_shop/common/widgets/shimmer/t_list_shimmer.dart';
 import 'package:admin_store_commerce_shop/constant/widgets/app_bar/custom_appbar.dart';
 import 'package:admin_store_commerce_shop/pages/upload/brand_upload/brand_upload.dart';
 import 'package:admin_store_commerce_shop/pages/upload/brand_upload/controller/brand_controller.dart';
 import 'package:admin_store_commerce_shop/util/constants/colors.dart';
+import 'package:admin_store_commerce_shop/util/constants/image_string.dart';
 import 'package:admin_store_commerce_shop/util/constants/sizes.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:lottie/lottie.dart';
 
 class ViewCategoryBrand extends StatelessWidget {
   const ViewCategoryBrand({
@@ -50,6 +50,17 @@ class ViewCategoryBrand extends StatelessWidget {
                     return Obx(() {
                       if (controller.isLoading.value) {
                         return TListShimmer();
+                      } else if (controller.categories.isEmpty) {
+                        return Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Lottie.asset(TImage.emptyList, repeat: false),
+                              Text("Category is empty"),
+                            ],
+                          ), // Show message when the list is empty
+                        );
                       } else {
                         return ListView.builder(
                           physics: NeverScrollableScrollPhysics(),

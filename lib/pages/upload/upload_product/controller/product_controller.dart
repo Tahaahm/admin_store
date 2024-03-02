@@ -58,18 +58,18 @@ class ProductController extends GetxController {
 
   @override
   void onClose() {
-    nameProductController.dispose();
-    depthController.dispose();
-    widthController.dispose();
-    heightController.dispose();
-    volumeController.dispose();
-    powerController.dispose();
-    priceController.dispose();
-    materialController.dispose();
-    brandController.dispose();
-    stockController.dispose();
-    descriptionController.dispose();
-    weightController.dispose();
+    nameProductController.clear();
+    depthController.clear();
+    widthController.clear();
+    heightController.clear();
+    volumeController.clear();
+    powerController.clear();
+    priceController.clear();
+    materialController.clear();
+    brandController.clear();
+    stockController.clear();
+    descriptionController.clear();
+    weightController.clear();
 
     super.onClose();
   }
@@ -101,7 +101,6 @@ class ProductController extends GetxController {
         "Uploading Product...",
         TImage.processing,
       );
-      print(descriptions.map((desc) => desc.value).toList());
 
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
@@ -116,7 +115,6 @@ class ProductController extends GetxController {
 
       if (supCategoryId.isEmpty || categoryId.isEmpty || brandId.isEmpty) {
         TFullScreenLoader.stopLoading();
-
         return;
       }
 
@@ -133,14 +131,14 @@ class ProductController extends GetxController {
       final imageUrl = await _storageService.uploadImageFile(
         'Products',
         pickedImage.value!,
-        nameProductController.text,
+        _capitalizeFirstLetter(nameProductController.text),
       );
 
       var random = Random().nextInt(10000);
       // Set the image URL in the product model
       final product = ProductModel(
         id: random.toString(),
-        title: nameProductController.text,
+        title: _capitalizeFirstLetter(nameProductController.text),
         depth: double.parse(depthController.text),
         width: double.parse(widthController.text),
         height: double.parse(heightController.text),
@@ -154,8 +152,11 @@ class ProductController extends GetxController {
         description: descriptions.map((desc) => desc.value).toList(),
         volume: double.parse(volumeController.text),
         weight: double.parse(weightController.text),
+        supcategoryId: supCategoryId,
+        categoryId: categoryId,
+        brandId: brandId,
       );
-      print(product.toJson());
+
       // Upload the product to the brand
       await uploadRepository.uploadProductInBrand(
         supCategoryId,
@@ -184,6 +185,11 @@ class ProductController extends GetxController {
         message: e.toString(),
       );
     }
+  }
+
+  String _capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return '';
+    return text[0].toUpperCase() + text.substring(1);
   }
 
   Future<void> pickImage() async {
