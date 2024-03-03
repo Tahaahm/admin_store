@@ -151,7 +151,7 @@ class UploadPage extends StatelessWidget {
               onTap: () => Get.to(() => ExChangePage()),
               leading: Icon(
                 Iconsax.money_change,
-                color: TColors.warning,
+                color: TColors.success,
                 size: TSize.iconLg,
               ),
               title: Text(
@@ -160,7 +160,7 @@ class UploadPage extends StatelessWidget {
               ),
               trailing: Icon(
                 Iconsax.dollar_circle,
-                color: TColors.warning,
+                color: TColors.success,
                 size: TSize.iconMd,
               ),
             ),

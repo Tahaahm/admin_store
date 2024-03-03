@@ -6,6 +6,7 @@ import 'package:admin_store_commerce_shop/pages/upload/update/controller/update_
 import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/constants/text_strings.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
+import 'package:admin_store_commerce_shop/util/helpers/helper_functions.dart';
 import 'package:admin_store_commerce_shop/util/validators/validation.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class UpdateProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UpdateController(product: productModel));
-
+    final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
           title: Text("Update Product"),
@@ -39,7 +40,10 @@ class UpdateProduct extends StatelessWidget {
               Get.back(); // Second back
               print("object");
             },
-            child: Icon(Icons.arrow_back_ios),
+            child: Icon(
+              Icons.arrow_back_ios,
+              color: dark ? TColors.white : TColors.black,
+            ),
           )),
       body: SingleChildScrollView(
         child: Column(children: [
