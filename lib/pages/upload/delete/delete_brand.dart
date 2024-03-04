@@ -90,8 +90,7 @@ class DeleteBrandPage extends StatelessWidget {
                                     size: TSize.iconLg,
                                   ),
                                   title: Text(controller.brands[index].title),
-                                  subtitle:
-                                      Text("upload category to SupCategory"),
+                                  subtitle: Text("Delete Brand"),
                                   trailing: Icon(
                                     Iconsax.arrow_right_41,
                                     color: TColors.error,

@@ -85,7 +85,7 @@ class ViewBrandProduct extends StatelessWidget {
                                   ),
                                   title: Text(controller.brands[index].title),
                                   subtitle: Text(
-                                    "upload category to SupCategory",
+                                    "Upload Brand",
                                   ),
                                   trailing: Icon(
                                     Iconsax.arrow_right_41,

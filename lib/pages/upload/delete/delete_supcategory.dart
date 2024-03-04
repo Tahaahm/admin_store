@@ -64,7 +64,7 @@ class DeleteSupCategoryPage extends StatelessWidget {
                               size: TSize.iconLg,
                             ),
                             title: Text(controller.supcategories[index].title),
-                            subtitle: Text("upload category to SupCategory"),
+                            subtitle: Text("Delete SupCategory"),
                             trailing: Icon(
                               Iconsax.arrow_right_41,
                               color: TColors.error,

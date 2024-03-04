@@ -65,7 +65,7 @@ class ViewSupCategoryProduct extends StatelessWidget {
                               size: TSize.iconLg,
                             ),
                             title: Text(controller.supcategories[index].title),
-                            subtitle: Text("upload category to SupCategory"),
+                            subtitle: Text("upload  SupCategory"),
                             trailing: Icon(
                               Iconsax.arrow_right_41,
                               color: TColors.primaryColor,

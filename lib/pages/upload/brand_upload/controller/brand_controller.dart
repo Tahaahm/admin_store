@@ -121,21 +121,28 @@ class BrandController extends GetxController {
     try {
       TFullScreenLoader.openLoadingDialog("Deleting...", TImage.processing);
       // Delete SupCategory
+      final isConnected = await NetworkManager.instance.isConnected();
+      if (!isConnected) {
+        TLoaders.errorSnackBar(
+            title: "No Ineternet Connection",
+            message: "Please try to connect internet and try again");
+        TFullScreenLoader.stopLoadingNavigate();
+        return;
+      }
       await _uploadRepository.deleteCategory(supCategoryId, categoryId);
 
       TLoaders.successSnackBar(
           title: "SupCategory deleted successfully",
           message: "Successfully deleted");
-    } catch (e) {
-      TLoaders.errorSnackBar(
-          title: "Failed to delete SupCategory", message: e.toString());
-    } finally {
       Navigator.pushAndRemoveUntil(
           Get.context!,
           MaterialPageRoute(
             builder: (context) => NavigationMenu(),
           ),
           (route) => false);
+    } catch (e) {
+      TLoaders.errorSnackBar(
+          title: "Failed to delete SupCategory", message: e.toString());
     }
   }
 }
