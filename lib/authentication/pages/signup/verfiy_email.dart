@@ -1,7 +1,10 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, unused_element
+
+import 'dart:async';
 
 import 'package:admin_store_commerce_shop/authentication/controller/signup/verify_email_controller.dart';
 import 'package:admin_store_commerce_shop/repository/authentication_repository.dart';
+import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/constants/image_string.dart';
 import 'package:admin_store_commerce_shop/util/constants/text_strings.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
@@ -10,19 +13,71 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
-class VerfiyEmailScreen extends StatelessWidget {
-  const VerfiyEmailScreen({super.key, required this.email});
+import '../../../util/helpers/helper_functions.dart';
+
+class VerfiyEmailScreen extends StatefulWidget {
+  const VerfiyEmailScreen({Key? key, required this.email}) : super(key: key);
   final String email;
+
+  @override
+  _VerfiyEmailScreenState createState() => _VerfiyEmailScreenState();
+}
+
+class _VerfiyEmailScreenState extends State<VerfiyEmailScreen> {
+  late Timer _timer;
+  int _start = 60;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+      (timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+
+  void _restartTimer() {
+    setState(() {
+      _start = 60;
+      _startTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(VerifyEmailController());
+    final dark = THelperFunctions.isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
             onPressed: () => AuthenticationRepository.instance.logout(),
-            icon: Icon(CupertinoIcons.clear),
+            icon: Icon(
+              CupertinoIcons.clear,
+              color: dark ? TColors.white : TColors.black,
+            ),
           ),
         ],
       ),
@@ -44,7 +99,7 @@ class VerfiyEmailScreen extends StatelessWidget {
                 height: Dimentions.height12,
               ),
               Text(
-                email,
+                widget.email,
                 style: Theme.of(context).textTheme.labelLarge,
                 textAlign: TextAlign.center,
               ),
@@ -70,10 +125,18 @@ class VerfiyEmailScreen extends StatelessWidget {
                 height: Dimentions.height32,
               ),
               SizedBox(
-                  width: double.infinity,
-                  child: TextButton(
-                      onPressed: () => controller.sendEmailVerification(),
-                      child: Text(TText.resendEmail)))
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: _start == 0
+                      ? () => controller.sendEmailVerification()
+                      : null,
+                  child: Text(
+                    _start == 0
+                        ? TText.resendEmail
+                        : 'Resend in $_start seconds',
+                  ),
+                ),
+              ),
             ],
           ),
         ),

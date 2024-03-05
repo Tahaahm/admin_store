@@ -32,51 +32,54 @@ class ResetPasswordScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(TSize.defaultSpace),
-        child: Column(
-          children: [
-            Lottie.asset(TImage.processing,
-                width: THelperFunctions.screenWidth() * 0.6),
-            SizedBox(
-              height: TSize.spaceBtwSections,
-            ),
-            Text(
-              TText.changeYourPasswordTitle,
-              style: Theme.of(context).textTheme.headlineMedium,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: TSize.spaceBtwItems,
-            ),
-            SizedBox(
-              height: TSize.spaceBtwItems,
-            ),
-            Text(
-              TText.changeYourPasswordSubTitle,
-              style: Theme.of(context).textTheme.labelMedium,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: TSize.spaceBtwSections,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () => Get.offAll(() => LoginPage()),
-                child: Text(TText.done),
+        child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              Lottie.asset(TImage.processing,
+                  width: THelperFunctions.screenWidth() * 0.6),
+              SizedBox(
+                height: TSize.spaceBtwSections,
               ),
-            ),
-            SizedBox(
-              height: TSize.spaceBtwItems,
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: TextButton(
-                onPressed: () => FogetPasswordController.instance
-                    .resendPasswordResetEmail(email),
-                child: Text(TText.resendEmail),
+              Text(
+                TText.changeYourPasswordTitle,
+                style: Theme.of(context).textTheme.headlineMedium,
+                textAlign: TextAlign.center,
               ),
-            ),
-          ],
+              SizedBox(
+                height: TSize.spaceBtwItems,
+              ),
+              SizedBox(
+                height: TSize.spaceBtwItems,
+              ),
+              Text(
+                TText.changeYourPasswordSubTitle,
+                style: Theme.of(context).textTheme.labelMedium,
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: TSize.spaceBtwSections,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () => Get.offAll(() => LoginPage()),
+                  child: Text(TText.done),
+                ),
+              ),
+              SizedBox(
+                height: TSize.spaceBtwItems,
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: TextButton(
+                  onPressed: () => FogetPasswordController.instance
+                      .resendPasswordResetEmail(email),
+                  child: Text(TText.resendEmail),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

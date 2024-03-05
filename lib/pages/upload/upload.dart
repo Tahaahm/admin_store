@@ -30,8 +30,7 @@ class UploadPage extends StatelessWidget {
         padding: EdgeInsets.all(Dimentions.height12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TSectionHeading(title: "Main Record"),
+          children: [            TSectionHeading(title: "Main Record"),
             ListTile(
               onTap: () => Get.to(() => SupCategoryUploadPage()),
               leading: Icon(

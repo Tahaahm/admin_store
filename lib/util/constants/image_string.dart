@@ -9,7 +9,7 @@ class TImage {
 
   static const String logoLogingDark = "assets/animations/login.json";
 
-  static const String processing = "assets/animations/processing_blue.json";
+  static const String processing = "assets/animations/proccing_dark_blue.json";
   static const String success = "assets/animations/successfully blue.json";
   static const String verfiy = "assets/animations/verify.json";
   static const String onBoarding1 =

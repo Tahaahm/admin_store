@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:async';
+
 import 'package:admin_store_commerce_shop/models/user_model.dart';
 import 'package:admin_store_commerce_shop/repository/user_repository/user.dart';
 import 'package:admin_store_commerce_shop/util/constants/sizes.dart';
@@ -14,14 +16,21 @@ class HomeController extends GetxController {
   static HomeController get instance => Get.find();
 
   final usersLoading = false.obs;
+  RxList<UserModel> userList = <UserModel>[].obs;
 
-  RxList<UserModel> userList =
-      <UserModel>[].obs; // Add a list to hold all users
+  Timer? _timer;
 
   @override
   void onInit() {
-    fetchAllUsers();
+    fetchAllUsers(); // Initially fetch users
+    startFetchingUsersPeriodically();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _timer?.cancel(); // Cancel the timer when the controller is closed
+    super.onClose();
   }
 
   Future<void> fetchAllUsers() async {
@@ -34,6 +43,13 @@ class HomeController extends GetxController {
     } finally {
       usersLoading.value = false;
     }
+  }
+
+  void startFetchingUsersPeriodically() {
+    const duration = Duration(seconds: 300);
+    _timer = Timer.periodic(duration, (timer) {
+      fetchAllUsers();
+    });
   }
 
   void deleteAccountWarningPopup(String userId, String email) {
