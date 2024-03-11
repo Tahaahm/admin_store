@@ -4,7 +4,6 @@ import 'package:admin_store_commerce_shop/constant/general_bindings.dart';
 import 'package:admin_store_commerce_shop/firebase_options.dart';
 import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/themes/theme.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
