@@ -1,6 +1,4 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
-
-import 'package:admin_store_commerce_shop/constant/widgets/app_bar/custom_appbar.dart';
 import 'package:admin_store_commerce_shop/models/products/product_model.dart';
 import 'package:admin_store_commerce_shop/pages/upload/update/controller/update_controller.dart';
 import 'package:admin_store_commerce_shop/util/constants/colors.dart';
