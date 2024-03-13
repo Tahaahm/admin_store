@@ -58,17 +58,6 @@ class SettingsPage extends StatelessWidget {
                     title: "Account Settings",
                   ),
                   TSettingsMenuTitle(
-                    icon: Iconsax.shopping_cart,
-                    title: "My Cart",
-                    subTitle: "add, remove products and move to checkout",
-                    onTap: () {
-                      TLoaders.warningSnackBar(
-                          title: "admin Doesn't has any cart",
-                          message:
-                              "Please create User account then you will have cart");
-                    },
-                  ),
-                  TSettingsMenuTitle(
                     icon: Iconsax.security_card,
                     title: "Account Privacy",
                     subTitle: "Manage data usage and connected accounts",
@@ -104,7 +93,15 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: TSize.spaceBtwSections,
+                    height: TSize.spaceBtwItems,
+                  ),
+                  TSettingsMenuTitle(
+                    icon: Iconsax.monitor_mobbile,
+                    title: "Version App",
+                    subTitle: "1.0.0",
+                  ),
+                  SizedBox(
+                    height: TSize.spaceBtwItems,
                   ),
                   SizedBox(
                     width: double.infinity,
