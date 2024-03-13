@@ -45,11 +45,26 @@ class HomeController extends GetxController {
     }
   }
 
-  void startFetchingUsersPeriodically() {
-    const duration = Duration(seconds: 300);
-    _timer = Timer.periodic(duration, (timer) {
-      fetchAllUsers();
-    });
+  void startFetchingUsersPeriodically() async {
+    try {
+      const duration = Duration(seconds: 300);
+      _timer = Timer.periodic(duration, (timer) async {
+        final isConnected = await NetworkManager.instance.isConnected();
+        if (!isConnected) {
+          // Handle no internet connection
+          // For example, show a snackbar or dialog informing the user
+          TLoaders.errorSnackBar(
+            title: "No Internet Connection",
+            message: "Please connect to the internet and try again",
+          );
+          return; // Return without starting the timer if there's no internet
+        }
+        fetchAllUsers();
+      });
+    } catch (e) {
+      // Handle error, if any
+      print("Error starting timer: $e");
+    }
   }
 
   void deleteAccountWarningPopup(String userId, String email) {
