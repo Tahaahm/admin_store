@@ -116,7 +116,7 @@ class UserList extends StatelessWidget {
               children: [
                 Text(
                   "The User is empty",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 SizedBox(height: Dimentions.height30),
                 ElevatedButton(
