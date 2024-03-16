@@ -12,7 +12,6 @@ import 'package:admin_store_commerce_shop/repository/authentication_repository.d
 import 'package:admin_store_commerce_shop/util/constants/colors.dart';
 import 'package:admin_store_commerce_shop/util/constants/sizes.dart';
 import 'package:admin_store_commerce_shop/util/dimention/dimention.dart';
-import 'package:admin_store_commerce_shop/util/popups/loaders.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
