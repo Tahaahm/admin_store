@@ -16,12 +16,6 @@ class BrandController extends GetxController {
   static BrandController get instance => Get.find();
 
   @override
-  void onInit() {
-    fetchCategoriesForSupCategory("");
-    super.onInit();
-  }
-
-  @override
   void onClose() {
     brandTitle.clear();
     super.onClose();

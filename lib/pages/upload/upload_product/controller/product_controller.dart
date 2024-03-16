@@ -21,12 +21,6 @@ import 'package:image_picker/image_picker.dart';
 class ProductController extends GetxController {
   static ProductController get instance => Get.find();
 
-  @override
-  void onInit() {
-    fetchBrandInCategories("", "");
-    super.onInit();
-  }
-
   final _fetchRepository = Get.put(FetchRepository());
   final _uploadRepository = Get.put(UploadRepository());
   RxList<BrandModel> brands = <BrandModel>[].obs;

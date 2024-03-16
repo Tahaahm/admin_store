@@ -59,6 +59,11 @@ class FetchRepository extends GetxController {
   Future<List<BrandModel>> fetchBrandsForCategory(
       String supCategoryId, String categoryId) async {
     try {
+      print(supCategoryId + " " + categoryId);
+      if (supCategoryId.isEmpty || categoryId.isEmpty) {
+        throw ArgumentError('supCategoryId and categoryId must not be empty');
+      }
+
       QuerySnapshot brandsSnapshot = await _firestore
           .collection('Supcategories')
           .doc(supCategoryId)

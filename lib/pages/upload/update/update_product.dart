@@ -44,320 +44,331 @@ class UpdateProduct extends StatelessWidget {
             ),
           )),
       body: SingleChildScrollView(
-        child: Column(children: [
-          Padding(
-            padding: EdgeInsets.all(Dimentions.height16),
-            child: Column(
-              children: [
-                SizedBox(
-                  width: Dimentions.pageView500,
-                  child: Form(
-                      key: controller.keyForm,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextFormField(
-                            controller: controller.brandController,
-                            decoration: InputDecoration(
-                              labelText: TText.brand,
-                              prefixIcon: Icon(Iconsax.language_square),
-                            ),
-                          ),
-                          SizedBox(
-                            height: Dimentions.height45,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(Dimentions.height32),
-                            child: Container(
-                              height: 210,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimentions.height12),
-                                border: Border.all(color: TColors.primaryColor),
+        child: Center(
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Padding(
+              padding: EdgeInsets.all(Dimentions.height16),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: Dimentions.pageView500,
+                    child: Form(
+                        key: controller.keyForm,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            TextFormField(
+                              controller: controller.brandController,
+                              decoration: InputDecoration(
+                                labelText: TText.brand,
+                                prefixIcon: Icon(Iconsax.language_square),
                               ),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: CachedNetworkImage(
-                                  imageUrl: productModel.imageUrl,
-                                  fit: BoxFit.cover,
-                                  placeholder: (context, url) => Center(
-                                    child: CircularProgressIndicator(
-                                      color: TColors.primaryColor,
+                            ),
+                            SizedBox(
+                              height: Dimentions.height45,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(Dimentions.height32),
+                              child: Container(
+                                height: 210,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimentions.height12),
+                                  border:
+                                      Border.all(color: TColors.primaryColor),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: CachedNetworkImage(
+                                    imageUrl: productModel.imageUrl,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: TColors.primaryColor,
+                                      ),
                                     ),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
                                   ),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: Dimentions.height20,
-                          ),
-                          TextFormField(
-                            controller: controller.nameProductController,
-                            keyboardType: TextInputType.name,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.nameProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.nameProduct),
-                              prefixIcon: Icon(Iconsax.emoji_normal),
+                            SizedBox(
+                              height: Dimentions.height20,
                             ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.nameProductController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: controller.priceController,
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) =>
-                                      TValidator.validateEmptyText(
-                                          TText.priceProduct, value),
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    label: Text(TText.priceProduct),
-                                    prefixIcon: Icon(Iconsax.money_forbidden),
-                                  ),
-                                  onChanged: (newValue) {
-                                    controller.updateTextController(
-                                        controller.priceController, newValue);
-                                  },
-                                ),
+                            TextFormField(
+                              controller: controller.nameProductController,
+                              keyboardType: TextInputType.name,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.nameProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.nameProduct),
+                                prefixIcon: Icon(Iconsax.emoji_normal),
                               ),
-                              SizedBox(
-                                width: Dimentions.height15,
-                              ),
-                              Expanded(
-                                child: DropdownButtonFormField<String>(
-                                  value: controller.newCurrency,
-                                  decoration: InputDecoration(
-                                    labelText: TText.currencyProduct,
-                                    prefixIcon: Icon(Iconsax.chart_square),
-                                  ),
-                                  items:
-                                      controller.currencyList.map((currency) {
-                                    return DropdownMenuItem<String>(
-                                      value: currency,
-                                      child: Text(currency),
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) {
-                                    // Update the text field controller and the currency
-                                    controller
-                                        .updateTextControllerDropDown(value!);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TextFormField(
-                                  controller: controller.heightController,
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) =>
-                                      TValidator.validateEmptyText(
-                                          TText.heightProduct, value),
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    label: Text(TText.heightProduct),
-                                    prefixIcon: Icon(Iconsax.sidebar_top),
-                                  ),
-                                  onChanged: (newValue) {
-                                    controller.updateTextController(
-                                        controller.heightController, newValue);
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                width: Dimentions.height15,
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  controller: controller.widthController,
-                                  keyboardType: TextInputType.number,
-                                  validator: (value) =>
-                                      TValidator.validateEmptyText(
-                                          TText.widthProduct, value),
-                                  expands: false,
-                                  decoration: InputDecoration(
-                                    label: Text(TText.widthProduct),
-                                    prefixIcon: Icon(Iconsax.weight),
-                                  ),
-                                  onChanged: (newValue) {
-                                    controller.updateTextController(
-                                        controller.widthController, newValue);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.depthController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.depthProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.depthProduct),
-                              prefixIcon: Icon(Iconsax.sidebar_bottom),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.nameProductController, newValue);
+                              },
                             ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.depthController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.weightController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.kWProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text("Weight"),
-                              prefixIcon: Icon(Iconsax.weight),
+                            SizedBox(
+                              height: Dimentions.height15,
                             ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.weightController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.powerController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.kWProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.kWProduct),
-                              prefixIcon: Icon(Iconsax.electricity),
-                            ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.powerController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.stockController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.stockProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.stockProduct),
-                              prefixIcon: Icon(Iconsax.forward_item),
-                            ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.stockController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.materialController,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.materialProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.materialProduct),
-                              prefixIcon: Icon(Iconsax.forward_item),
-                            ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.materialController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height15,
-                          ),
-                          TextFormField(
-                            controller: controller.volumeController,
-                            keyboardType: TextInputType.number,
-                            validator: (value) => TValidator.validateEmptyText(
-                                TText.litersProduct, value),
-                            expands: false,
-                            decoration: InputDecoration(
-                              label: Text(TText.litersProduct),
-                              prefixIcon: Icon(Iconsax.forward_item),
-                            ),
-                            onChanged: (newValue) {
-                              controller.updateTextController(
-                                  controller.volumeController, newValue);
-                            },
-                          ),
-                          SizedBox(
-                            height: Dimentions.height40,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: controller.descriptionController.text
-                                .split(',')
-                                .length,
-                            itemBuilder: (context, index) {
-                              String item = controller
-                                  .descriptionController.text
-                                  .split(',')[index]
-                                  .trim();
-                              return Column(
-                                children: [
-                                  TextFormField(
-                                    initialValue: item,
-                                    keyboardType: TextInputType.text,
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: controller.priceController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) =>
+                                        TValidator.validateEmptyText(
+                                            TText.priceProduct, value),
+                                    expands: false,
                                     decoration: InputDecoration(
-                                      labelText: 'Description ${index + 1}',
-                                      prefixIcon: Icon(Iconsax.forward_item),
+                                      label: Text(TText.priceProduct),
+                                      prefixIcon: Icon(Iconsax.money_forbidden),
                                     ),
-                                    onChanged: (value) {
-                                      List<String> descriptions = controller
-                                          .descriptionController.text
-                                          .split(',');
-                                      descriptions[index] = value;
-                                      // Update the corresponding text controller directly
-                                      controller.descriptionController.text =
-                                          descriptions.join(',');
+                                    onChanged: (newValue) {
+                                      controller.updateTextController(
+                                          controller.priceController, newValue);
                                     },
                                   ),
-                                  SizedBox(
-                                    height: Dimentions.height20,
+                                ),
+                                SizedBox(
+                                  width: Dimentions.height15,
+                                ),
+                                Expanded(
+                                  child: DropdownButtonFormField<String>(
+                                    value: controller.newCurrency,
+                                    decoration: InputDecoration(
+                                      labelText: TText.currencyProduct,
+                                      prefixIcon: Icon(Iconsax.chart_square),
+                                    ),
+                                    items:
+                                        controller.currencyList.map((currency) {
+                                      return DropdownMenuItem<String>(
+                                        value: currency,
+                                        child: Text(currency),
+                                      );
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      // Update the text field controller and the currency
+                                      controller
+                                          .updateTextControllerDropDown(value!);
+                                    },
                                   ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      )),
-                ),
-              ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: controller.heightController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) =>
+                                        TValidator.validateEmptyText(
+                                            TText.heightProduct, value),
+                                    expands: false,
+                                    decoration: InputDecoration(
+                                      label: Text(TText.heightProduct),
+                                      prefixIcon: Icon(Iconsax.sidebar_top),
+                                    ),
+                                    onChanged: (newValue) {
+                                      controller.updateTextController(
+                                          controller.heightController,
+                                          newValue);
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: Dimentions.height15,
+                                ),
+                                Expanded(
+                                  child: TextFormField(
+                                    controller: controller.widthController,
+                                    keyboardType: TextInputType.number,
+                                    validator: (value) =>
+                                        TValidator.validateEmptyText(
+                                            TText.widthProduct, value),
+                                    expands: false,
+                                    decoration: InputDecoration(
+                                      label: Text(TText.widthProduct),
+                                      prefixIcon: Icon(Iconsax.weight),
+                                    ),
+                                    onChanged: (newValue) {
+                                      controller.updateTextController(
+                                          controller.widthController, newValue);
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.depthController,
+                              keyboardType: TextInputType.number,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.depthProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.depthProduct),
+                                prefixIcon: Icon(Iconsax.sidebar_bottom),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.depthController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.weightController,
+                              keyboardType: TextInputType.number,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.kWProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text("Weight"),
+                                prefixIcon: Icon(Iconsax.weight),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.weightController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.powerController,
+                              keyboardType: TextInputType.number,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.kWProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.kWProduct),
+                                prefixIcon: Icon(Iconsax.electricity),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.powerController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.stockController,
+                              keyboardType: TextInputType.number,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.stockProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.stockProduct),
+                                prefixIcon: Icon(Iconsax.forward_item),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.stockController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.materialController,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.materialProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.materialProduct),
+                                prefixIcon: Icon(Iconsax.forward_item),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.materialController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height15,
+                            ),
+                            TextFormField(
+                              controller: controller.volumeController,
+                              keyboardType: TextInputType.number,
+                              validator: (value) =>
+                                  TValidator.validateEmptyText(
+                                      TText.litersProduct, value),
+                              expands: false,
+                              decoration: InputDecoration(
+                                label: Text(TText.litersProduct),
+                                prefixIcon: Icon(Iconsax.forward_item),
+                              ),
+                              onChanged: (newValue) {
+                                controller.updateTextController(
+                                    controller.volumeController, newValue);
+                              },
+                            ),
+                            SizedBox(
+                              height: Dimentions.height40,
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: controller.descriptionController.text
+                                  .split(',')
+                                  .length,
+                              itemBuilder: (context, index) {
+                                String item = controller
+                                    .descriptionController.text
+                                    .split(',')[index]
+                                    .trim();
+                                return Column(
+                                  children: [
+                                    TextFormField(
+                                      initialValue: item,
+                                      keyboardType: TextInputType.text,
+                                      decoration: InputDecoration(
+                                        labelText: 'Description ${index + 1}',
+                                        prefixIcon: Icon(Iconsax.forward_item),
+                                      ),
+                                      onChanged: (value) {
+                                        List<String> descriptions = controller
+                                            .descriptionController.text
+                                            .split(',');
+                                        descriptions[index] = value;
+                                        // Update the corresponding text controller directly
+                                        controller.descriptionController.text =
+                                            descriptions.join(',');
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: Dimentions.height20,
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ]),
+          ]),
+        ),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(Dimentions.height15),
