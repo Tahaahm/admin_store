@@ -98,7 +98,10 @@ class ProductController extends GetxController {
 
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
-        TFullScreenLoader.stopLoading();
+        TLoaders.errorSnackBar(
+            title: "No Internet Connection",
+            message: "Please try to connect to the internet and try again");
+        TFullScreenLoader.stopLoadingNavigate();
         return;
       }
 
